@@ -1,0 +1,115 @@
+create database company;
+use company;
+SET SQL_SAFE_UPDATES=0;
+select  from dept;
+create table dept(dno int primary key,dname varchar(50),loc varchar(40));
+insert into dept (dno,dname,loc) values(101,'computer','pune');
+insert into dept (dno,dname,loc) values(102,'computer science','pune');
+insert into dept (dno,dname,loc) values(103,'quality','mumbai');
+insert into dept values (104,'accounts','pune');
+
+create table emp(eno int primary key,ename varchar(50),designation varchar(50),salary float,date_join date,dno int references dept(dno));
+select  from emp;
+insert into emp values(1,'Mr.Advait','assistant',54000,'2002-03-23',101);
+insert into emp values(2,'Mr.Roy','ceo',50000,'2019-06-15',102);
+insert into emp values(3,'Mr.Abhay','Manager',60000,'2019-06-10',102);
+insert into emp values(5,'Mr.Rajat','manager',420000,'2003-03-1',104,34563677);
+insert into emp values(4,'mr.Aditya','ceo',900000,'2023-04-8',103,457727623);
+
+
+1)add colm of phno
+alter table emp add column phno int ;
+
+update emp set phno=1234567891;
+
+
+delete from emp where designation='manager';
+
+select count(eno) from emp group by dno;
+
+select ename from emp,dept where emp.dno=dept.dno and designation='manager' and dname='accounts';
+
+select dname from emp,dept where emp.dno=dept.dno and loc='pune' and ename='mr.advait';
+
+select ename from emp,dept where emp.dno=dept.dno and salary=50000 and dname='quality';
+update emp,dept set date_join='2019-06-15' where emp.dno=dept.dno and dname='computer' and ename='mr.roy';
+-----------------------------------------------------------------------------------------------------------------------------------------------
+create table client (client_no int primary key,cleient_name varchar(30),addr varchar(50));
+create table sales_order(ordno int primary key,ord_date date,sales_order int,client_no int references client(client_no));
+insert into client values(1,'patil','pune');
+insert into client values(2,'patil','nashik');
+insert into client values(3,'roy','pimpri');
+insert into client values(4,'arun','pune');
+ select  from client;
+ select  from sales_order;
+insert into sales_order values(101,'2019-08-09',567,1);
+insert into sales_order values(102,'2018-02-09',4589,2);
+insert into sales_order values(103,'2019-03-18',489,1);
+insert into sales_order values(104,'2022-01-09',700,3);
+insert into sales_order values(105,'2022-01-19',500,4);
+insert into sales_order values(106,'2022-01-10',1,400);
+
+update sales_order set sales_amt=4000;
+alter table sales_order add column sales_amt float;
+ 
+delete  from client where cleient_name like 'a%';
+
+delete from sales_order where client.client_no=sales_order.client_no and  cleient_name='patil' and ord_date='2019-08-09';
+ update sales_order set ord_date='2019-03-18' where client_no=101;
+ 
+ delete from sales_order where ord_date'2019-03-18';
+ 
+ update client set addr='pimpri' where cleient_name='mr.roy';
+ 
+ select  from sales_order where ord_date between '2022-1-1' and '2022-1-31';
+ 
+ select sum(sales_amt) from sales_order where ord_date between '2022-1-1' and '2022-1-31';
+  select count(client_no)as cnt from client group by addr='pune';
+ 
+ 
+ -------------------------------------------------------------------------------------
+ 
+ create table hospital(hno int primary key,hname varchar(20),year int,addr varchar(20));
+insert into hospital values(101,'birla',2001,'pimpri');
+insert into hospital values(102,'ruby',2004,'pune');
+insert into hospital values(103,'dinanth',2001,'pune');
+insert into hospital values(104,'swara',2000,'mumbai');
+insert into hospital values(105,'adinath',2004,'pimple gurav');
+select  from hospital;
+alter table hospital   change column  addr addr1  varchar(30);
+create table doctor(dno int primary key,dname varchar(20),addr varchar(20),speciality varchar(20),salary bigint,hno int references hospital);
+insert into doctor values(1,'ajay','pune','heart surgen',100000,102);
+insert into doctor values(2,'vijay','pune','dentist',90000,102);
+insert into doctor values(3,'ganesh','karjat','skin',80000,105);
+insert into doctor values(4,'more','pune','surgen',100000,103);
+insert into doctor values(5,'ajay','pimpri','dentist',70000,101);
+insert into doctor values(6,'suresh','chinchwad','skin',80000,101);
+insert into doctor values(7,'suresh','chinchwad','heart surgen',80000,105);
+select  from doctor;
+
+alter table hospital  drop column  addr1;
+alter table hospital  add column  addr1 varchar(20);
+
+select dname,hname,speciality from hospital,doctor where hospital.hno=doctor.hno and addr='pune';
+
+select hname from doctor,hospital where hospital.hno=doctor.hno and  addr='pimpri';
+select dname from hospital,doctor where hospital.hno=doctor.hno and hname='birla' and addr='cinchwad'; 
+
+select speciality from doctor,hospital where hospital.hno=doctor.hno and hname='ruby';
+
+select count(dno) from hospital,doctor where hospital.hno=doctor.hno and addr='pimple gurav' group by hname;
+
+update doctor,hospital set addr='pimpri' where hospital.hno=doctor.hno and hname='ruby';
+
+update hospital set addr1='pimpri' where year=2000;
+
+select sum(salary) from hospital,doctor where hospital.hno=doctor.hno  group by hname;
+
+select salary12  from doctor  where addr='pune'
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
